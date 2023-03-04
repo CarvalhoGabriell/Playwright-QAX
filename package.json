@@ -1,0 +1,18 @@
+{
+  "name": "playwright-mark",
+  "version": "1.0.0",
+  "description": "Projeto focado para introduzir o playwright como framework de test baseado em Typescript. Testes de API, WEB",
+  "main": "index.js",
+  "scripts": {
+    "start": "sh up-envirement.sh"
+  },
+  "keywords": [
+    "automation", "playwright", "web", "api"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@faker-js/faker": "^7.6.0",
+    "@playwright/test": "^1.31.1"
+  }
+}
