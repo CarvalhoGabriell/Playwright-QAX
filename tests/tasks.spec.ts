@@ -1,44 +1,57 @@
-import {test, expect} from '@playwright/test'
+import {expect, test} from '@playwright/test'
+// importando interface com a massa de dados para o test (payload para as apis)
+import {TaskModel} from './fixtures/task.model'
 
+// importando classe contendos os elementos da pagina
+import { TasksPage } from './Pages/tasks'; 
+import {deleteTaskNameByHelper, postNewTask} from './TypeScript/Helpers'
 
 // cada test() representa um cenário de teste
 test('Deve cadastrar uma nova Task', async({page, request}) => {
 
-    const nameNewTask = "Realizar cursos da QAX"
-    await request.delete('http://localhost:3333/helper/tasks/' + nameNewTask)
+    let newTask: TaskModel = {
+        name: "Concluir os cursos da QAX",
+        is_done: false
+    }
+    //delete
+    deleteTaskNameByHelper(request, newTask.name)
 
-    await page.goto('http://127.0.0.1:3000')
+    const taskPage: TasksPage = new TasksPage(page)
+    await taskPage.goURL();
+    await taskPage.create(newTask)
 
-    let inputText = page.locator("#newTask")
-    await inputText.fill(nameNewTask)
-
-    await page.getByRole('button', {name: 'Create'}).click()
-
-    let taskSucess = page.locator('css=.task-item > p >> text='+nameNewTask)
-    await expect(taskSucess).toBeVisible()
+    await taskPage.shouldHaveTextTask(newTask.name)
 });
 
-test.only('Não deve cadastrar tasks duplicadas', async({page, request})=> {
+test('Não deve cadastrar tasks duplicadas', async({page, request})=> {
 
-    const payload = {
+    const payload: TaskModel = {
         name: "Concluir testes para a prova",
         is_done: false
     }
+    //delete
+    deleteTaskNameByHelper(request, payload.name)
+    //post
+    postNewTask(request, payload)
 
-    await request.delete('http://localhost:3333/helper/tasks/'+payload.name)
-    let response = await request.post('http://localhost:3333/tasks/', {data:payload})
-    expect(response.ok()).toBeTruthy
-    console.log(response)
+    const taskPage: TasksPage = new TasksPage(page)
+    await taskPage.goURL();
+    await taskPage.create(payload)
+    await taskPage.expectModalError('Task already exists!')
+})
 
-    await page.goto('http://127.0.0.1:3000')
 
-    let inputText = page.locator("#newTask")
-    await inputText.fill(payload.name)
+test('Deve validar o campo obrigatório',async ({page}) => {
+    
+    const payload: TaskModel = {
+        name: '',
+        is_done: false
+    }
 
-    await page.getByRole('button', {name: 'Create'}).click()
+    const taskPage: TasksPage = new TasksPage(page)
+    await taskPage.goURL();
+    await taskPage.create(payload)
 
-    let modalErro = page.locator('#swal2-html-container')
-    await expect(modalErro).toHaveText('Task already exists!')
-
-    await page.getByRole('button', {name: 'OK'}).click()
+    const validateMsg = await taskPage.inputTaskName.evaluate(e => (e as HTMLInputElement).validationMessage)
+    expect(validateMsg).toEqual('This is a required field')
 })
