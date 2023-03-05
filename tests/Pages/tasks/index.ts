@@ -12,7 +12,7 @@ export class TasksPage {
     }
 
     async goURL() {
-        await this.page.goto('http://127.0.0.1:3000')
+        await this.page.goto('/')
     }
 
     async create(payloadnewTask: TaskModel) {
@@ -21,9 +21,29 @@ export class TasksPage {
     
     }
 
+    async removeTask(taskName: string) {
+        const taskDel = this.page.locator(`xpath=//p[text()="${taskName}"]/following-sibling::button`)
+        await taskDel.click()
+    }
+
+    async toggleDoneTask(taskName: string) {
+        const task = this.page.locator(`xpath=//p[text()="${taskName}"]/preceding-sibling::button`)
+        await task.click()
+    }
+
     async shouldHaveTextTask(taskName: string) {
         let taskSucess = this.page.locator('css=.task-item > p >> text='+taskName)
         await expect(taskSucess).toBeVisible()
+    }
+
+    async shouldBeDone(taskName: string) {
+        let taskTarget = this.page.getByText(taskName)
+        await expect(taskTarget).toHaveCSS('text-decoration-line', 'line-through')
+    }
+
+    async shouldNotExistTask(taskName: string) {
+        let taskRemove = this.page.locator('css=.task-item > p >> text='+taskName)
+        await expect(taskRemove).not.toBeVisible()
     }
 
     async expectModalError(msgError: string) {
