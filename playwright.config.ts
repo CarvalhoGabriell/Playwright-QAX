@@ -1,5 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
-
+require('dotenv').config()
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
@@ -41,7 +41,9 @@ export default defineConfig({
     trace: 'on-first-retry',
 
     // ativar ou desativar o modo headless de execução
-    headless: false
+    headless: false,
+    baseURL: process.env.BASE_URL_WEB,
+    screenshot: 'on'
   },
 
   /* Configure projects for major browsers */
