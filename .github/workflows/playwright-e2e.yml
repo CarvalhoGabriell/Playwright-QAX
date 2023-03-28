@@ -1,0 +1,33 @@
+name: Pipeline execução dos testes em Playwright
+on:
+  push:
+    branches: [main, master, qa-play]
+  pull_request:
+    branches: [main, master]
+jobs:
+  tests:
+    name: Execution Playwrigth Tests
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+      - name: Step 1 - Checkout repository
+        uses: actions/checkout@v3
+      - name: Step 2 - Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Step 3 - Install Dependences
+        run: npm install
+      - name: Step 4 -Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      - name: Step 5 - Up environment HML WEB
+        run: ls && echo Subindo WEB && cd ./Apps/api/ && npm run dev
+      # - name: Step 6 - Up environment HML API
+      #   run: echo Subindo API && cd ./Apps/web/ && npm run dev
+      # - name: Step 7 - Run tests Playwritght
+      #   run: npx playwright test
+      # - name: Gerando artifacts / Logs
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     path: playwright-report/

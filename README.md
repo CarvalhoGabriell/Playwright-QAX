@@ -1,9 +1,6 @@
 
 # Playwright + WEB e API
 
-    Adicione etiquetas de algum lugar, como: [shields.io](https://shields.io/)
-
-
     Projeto de automação WEB, construído do zero durante as aulas do curso: Playwright Express ministrado por Fernando Papito/ QAExperience.
 
     Durante as aulas implementamos as melhores práticas de automação web com o framework Playwright + TypeScript. Validações de regra de negócio, validação na camada de API da aplicação WEB.
