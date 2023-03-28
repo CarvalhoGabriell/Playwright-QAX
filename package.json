@@ -4,7 +4,8 @@
   "description": "Projeto focado para introduzir o playwright como framework de test baseado em Typescript. Testes de API, WEB",
   "main": "index.js",
   "scripts": {
-    "start": "sh up-envirement.sh"
+    "start_local": "sh local-up-envirement.sh",
+    "start": "sh pipeline-up-envirement.sh"
   },
   "keywords": [
     "automation",

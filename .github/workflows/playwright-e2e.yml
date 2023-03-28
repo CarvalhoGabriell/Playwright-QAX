@@ -20,10 +20,11 @@ jobs:
         run: npm install
       - name: Step 4 -Install Playwright Browsers
         run: npx playwright install --with-deps
+
       - name: Step 5 - Up environment HML WEB
-        run: npm run start && echo WEB
+        run: echo Subindo WEB && cd ./Apps/api/ && npm run dev
       - name: Step 6 - Up environment HML API
-        run: npm run start && echo API
+        run: echo Subindo API && cd ./Apps/web/ && npm run dev
       - name: Step 7 - Run tests Playwritght
         run: npx playwright test
       - name: Gerando artifacts / Logs
