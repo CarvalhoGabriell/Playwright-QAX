@@ -6,7 +6,7 @@ on:
     branches: [main, master]
 jobs:
   tests:
-    name: Playwrigth Tests
+    name: Execution Playwrigth Tests
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
@@ -21,9 +21,9 @@ jobs:
       - name: Step 4 -Install Playwright Browsers
         run: npx playwright install --with-deps
       - name: Step 5 - Up environment HML WEB
-        run: npm run start && echo 1
+        run: npm run start && echo WEB
       - name: Step 6 - Up environment HML API
-        run: npm run start && echo 2
+        run: npm run start && echo API
       - name: Step 7 - Run tests Playwritght
         run: npx playwright test
       - name: Gerando artifacts / Logs
