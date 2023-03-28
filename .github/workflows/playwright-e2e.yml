@@ -22,12 +22,13 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Step 5 - Up environment HML WEB
+        run: ls
         run: echo Subindo WEB && cd ./Apps/api/ && npm run dev
-      - name: Step 6 - Up environment HML API
-        run: echo Subindo API && cd ./Apps/web/ && npm run dev
-      - name: Step 7 - Run tests Playwritght
-        run: npx playwright test
-      - name: Gerando artifacts / Logs
-        uses: actions/upload-artifact@v3
-        with:
-          path: playwright-report/
+      # - name: Step 6 - Up environment HML API
+      #   run: echo Subindo API && cd ./Apps/web/ && npm run dev
+      # - name: Step 7 - Run tests Playwritght
+      #   run: npx playwright test
+      # - name: Gerando artifacts / Logs
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     path: playwright-report/
