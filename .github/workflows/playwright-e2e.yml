@@ -22,8 +22,7 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Step 5 - Up environment HML WEB
-        run: ls
-        run: echo Subindo WEB && cd ./Apps/api/ && npm run dev
+        run: ls && echo Subindo WEB && cd ./Apps/api/ && npm run dev
       # - name: Step 6 - Up environment HML API
       #   run: echo Subindo API && cd ./Apps/web/ && npm run dev
       # - name: Step 7 - Run tests Playwritght
